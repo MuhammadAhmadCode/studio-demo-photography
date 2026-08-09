@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette: cool paper + charcoal ink + deep petrol-blue accent.
+     Deliberately not the beige/brass/espresso "premium" default. */
+  --color-paper: #f3f4f5;
+  --color-surface: #ffffff;
+  --color-ink: #191b1e;
+  --color-ink-dim: #2b2e33;
+  --color-muted: #646a72;
+  --color-faint: #98a0a8;
+  --color-accent: #24557e;
+  --color-accent-soft: #3e6f9c;
+  --color-line: rgba(25, 27, 30, 0.1);
+
+  /* Typography: Cormorant Garamond (display) + Geist (UI). */
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+/* Anchored sections clear the fixed nav. */
+section[id] {
+  scroll-margin-top: 92px;
+}
+
+/* ------------- entrance & image motion ------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1.16);
+  }
+}
+
+.anim-rise {
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.anim-kenburns {
+  animation: kenburns 16s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .anim-rise {
+    opacity: 1;
+    animation: none;
+  }
+  .anim-kenburns {
+    animation: none;
+    transform: none;
+  }
+}
