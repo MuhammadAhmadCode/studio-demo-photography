@@ -4,9 +4,12 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { CaretLeft, CaretRight, X } from "@phosphor-icons/react/dist/ssr";
 import Reveal from "./Reveal";
-import { GALLERY, type GalleryItem } from "@/lib/site";
+import { GALLERY, type GalleryCategory, type GalleryItem } from "@/lib/site";
 
-const FILTERS = ["All", "Wedding", "Engagement", "Portrait", "Event"] as const;
+const FILTERS: ("All" | GalleryCategory)[] = [
+  "All",
+  ...Array.from(new Set(GALLERY.map((g) => g.category))),
+];
 type Filter = (typeof FILTERS)[number];
 
 export default function Gallery() {

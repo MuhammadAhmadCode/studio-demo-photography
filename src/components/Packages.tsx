@@ -2,6 +2,13 @@ import { Check } from "@phosphor-icons/react/dist/ssr";
 import Reveal from "./Reveal";
 import { PACKAGES } from "@/lib/site";
 
+const GROUP_LABELS = {
+  coverage: "Coverage",
+  photography: "Photography",
+  videography: "Videography",
+  deliverables: "Deliverables",
+} as const;
+
 export default function Packages() {
   return (
     <section id="packages" className="bg-paper py-28 sm:py-36">
@@ -30,13 +37,22 @@ export default function Packages() {
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
-                  <h3
-                    className={`font-display text-3xl font-semibold tracking-tight ${
-                      pkg.featured ? "text-paper" : "text-ink"
-                    }`}
-                  >
-                    {pkg.name}
-                  </h3>
+                  <div>
+                    <h3
+                      className={`font-display text-3xl font-semibold tracking-tight ${
+                        pkg.featured ? "text-paper" : "text-ink"
+                      }`}
+                    >
+                      {pkg.name}
+                    </h3>
+                    <p
+                      className={`mt-1 text-xs font-semibold uppercase tracking-[0.18em] ${
+                        pkg.featured ? "text-accent-soft" : "text-accent"
+                      }`}
+                    >
+                      {pkg.subhead}
+                    </p>
+                  </div>
                   {pkg.featured && (
                     <span className="rounded-full bg-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-paper">
                       Most booked
@@ -61,28 +77,43 @@ export default function Packages() {
                   </p>
                 </div>
 
-                <ul className="mt-7 flex-1 space-y-3">
-                  {pkg.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm">
-                      <span
-                        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
-                          pkg.featured
-                            ? "bg-accent text-paper"
-                            : "bg-ink/8 text-accent"
-                        }`}
-                      >
-                        <Check size={12} weight="bold" />
-                      </span>
-                      <span
-                        className={`leading-relaxed ${
-                          pkg.featured ? "text-paper/85" : "text-ink-dim"
-                        }`}
-                      >
-                        {f}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-7 flex-1 space-y-6">
+                  {(Object.keys(GROUP_LABELS) as (keyof typeof GROUP_LABELS)[]).map(
+                    (key) => (
+                      <div key={key}>
+                        <p
+                          className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                            pkg.featured ? "text-paper/50" : "text-faint"
+                          }`}
+                        >
+                          {GROUP_LABELS[key]}
+                        </p>
+                        <ul className="mt-3 space-y-2.5">
+                          {pkg[key].map((f) => (
+                            <li key={f} className="flex items-start gap-3 text-sm">
+                              <span
+                                className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
+                                  pkg.featured
+                                    ? "bg-accent text-paper"
+                                    : "bg-ink/8 text-accent"
+                                }`}
+                              >
+                                <Check size={12} weight="bold" />
+                              </span>
+                              <span
+                                className={`leading-relaxed ${
+                                  pkg.featured ? "text-paper/85" : "text-ink-dim"
+                                }`}
+                              >
+                                {f}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ),
+                  )}
+                </div>
 
                 <a
                   href="#booking"

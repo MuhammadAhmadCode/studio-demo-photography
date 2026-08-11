@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette: cool paper + charcoal ink + deep petrol-blue accent.
-     Deliberately not the beige/brass/espresso "premium" default. */
-  --color-paper: #f3f4f5;
-  --color-surface: #ffffff;
-  --color-ink: #191b1e;
-  --color-ink-dim: #2b2e33;
-  --color-muted: #646a72;
-  --color-faint: #98a0a8;
-  --color-accent: #24557e;
-  --color-accent-soft: #3e6f9c;
-  --color-line: rgba(25, 27, 30, 0.1);
+  /* Palette — warm ivory + charcoal + muted champagne gold.
+     The photography is the accent; chrome stays quiet. */
+  --color-paper: #f7f3ec;
+  --color-surface: #fdfbf7;
+  --color-sand: #efe8dc;
+  --color-ink: #201c17;
+  --color-ink-dim: #3a342c;
+  --color-muted: #6f6659;
+  --color-faint: #a89d8d;
+  --color-accent: #8f6a34;
+  --color-accent-soft: #c39a5f;
+  --color-line: rgba(32, 28, 23, 0.12);
 
   /* Typography: Cormorant Garamond (display) + Geist (UI). */
   --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
@@ -27,24 +28,49 @@ body {
   background-color: var(--color-paper);
   color: var(--color-ink);
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: var(--color-accent);
-  color: #ffffff;
+  color: #fdfbf7;
 }
 
 /* Anchored sections clear the fixed nav. */
 section[id] {
-  scroll-margin-top: 92px;
+  scroll-margin-top: 96px;
 }
 
-/* ------------- entrance & image motion ------------- */
+/* Focus states stay visible on any background. */
+:focus-visible {
+  outline: 2px solid var(--color-accent-soft);
+  outline-offset: 3px;
+}
+
+/* ---------- cinematic film grain (fixed, pointer-events none) ---------- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.9%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%2F%3E%3C%2Fsvg%3E");
+  background-size: 200px 200px;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body::after {
+    display: none;
+  }
+}
+
+/* ---------- entrance & cinematic motion ---------- */
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -52,29 +78,44 @@ section[id] {
   }
 }
 
-@keyframes kenburns {
+@keyframes fadein {
   from {
-    transform: scale(1.06);
+    opacity: 0;
   }
   to {
-    transform: scale(1.16);
+    opacity: 1;
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.14);
   }
 }
 
 .anim-rise {
   opacity: 0;
-  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.anim-fade {
+  opacity: 0;
+  animation: fadein 1.4s ease forwards;
 }
 
 .anim-kenburns {
-  animation: kenburns 16s ease-out forwards;
+  animation: kenburns 22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .anim-rise {
+  .anim-rise,
+  .anim-fade {
     opacity: 1;
     animation: none;
   }

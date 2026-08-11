@@ -222,7 +222,7 @@ export default function Booking() {
 
           <Reveal delay={0.1}>
             {done ? (
-              <div className="rounded-[2rem] bg-[#e9eaec] p-1.5 ring-1 ring-line">
+              <div className="rounded-[2rem] bg-sand p-1.5 ring-1 ring-line">
                 <div className="rounded-[calc(2rem-0.375rem)] bg-surface p-8 sm:p-10">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent">
                     <CheckCircle size={28} weight="fill" />
@@ -266,7 +266,7 @@ export default function Booking() {
               <form
                 onSubmit={submit}
                 noValidate
-                className="rounded-[2rem] bg-[#e9eaec] p-1.5 ring-1 ring-line"
+                className="rounded-[2rem] bg-sand p-1.5 ring-1 ring-line"
               >
                 <div className="rounded-[calc(2rem-0.375rem)] bg-surface p-6 sm:p-8">
                   <div className="grid gap-5 sm:grid-cols-2">
